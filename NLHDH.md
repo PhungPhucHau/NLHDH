@@ -1,6 +1,5 @@
 4.3 Code Reading Questions
 4.3.1 Thread questions
-
 1.What happens to a thread when it calls thread_exit? What about when it sleeps?
 Answer: Briefly when a Thread calls thread_exit(), then thread_exit() will set interrupts off to avoid race condition with context switch and then will save current threads VM space and set next threads as null, manipulate(decrement) the reference counts and add the thread to zombies' list, we don't actually destroy all its resources, it will be done by thread_destroy(). When thread calls thread_sleep it sets the address of the current thread as sleepaddr(sleep_address)and then gives a call to machinde independent context switch routine( Which in turn gives call to machine-dependent switch which calls mips_switch ) and sets sleep address of current thread as null 
 2.What function—​or functions—​handle(s) a context switch?
