@@ -1,0 +1,17 @@
+ male_start();	
+
+ while(whale_mating->num_male_whale>=1)
+ {
+   wchan_lock(whale_mating->male_wchan);
+   lock_release(whale_mating->lock);
+   wchan_sleep(whale_mating->male_wchan);
+   lock_acquire(whale_mating->lock);
+ }
+ whale_mating->num_male_whale++;
+ wchan_wakeall(whale_mating->match_wchan);
+ while(!(whale_mating->match_found==1))
+ {
+	 wchan_lock(whale_mating->match_wchan);lock_release(whale_mating->lock);wchan_sleep(whale_mating->match_wchan);lock_acquire(whale_mating->lock);
+ }
+ whale_mating->match_male=1;
+ male_end();
